@@ -1,0 +1,46 @@
+
+
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <div style="float:right">
+            <a href="/app/#/project/view/{{project._id}}/edit" class="btn btn-info">Edit</a>
+            <a href="/app/#/project/view/{{project._id}}/related" class="btn btn-success">Related</a>
+            <a href="/app/#/project/view/{{project._id}}/risks" class="btn btn-danger">Risks <span ng-if="project.risks != undefined">({{project.risks.length}})</span></a>
+            <a href="/app/#/project/view/{{project._id}}/feedback" class="btn btn-primary">Feedback ({{project.feedback.length}})</a>
+            <a href="#"  ng-click="delete()" class="btn btn-warning">Archive</a>
+        </div>
+        <a href="/app/#/projects">Back</a>
+        <div class="col-md-12 col-md-offset-1">
+            <h2 class="grey">
+                <img ng-src="{{project.thumbnail}}" alt="Thumbnail" height="60" width="90" style="border:1px solid grey; border-radius:10px;">
+                {{ project.name }}
+            </h2>
+        </div>
+        <div style="font-style: italic; font-size: 0.8em; margin-left:210px">
+            {{ project.description}}
+        </div>
+    </div>
+    <div class="col-md-9 col-md-offset-1" style="margin-top:40px;overflow: scroll">
+        <h4>Stakeholders</h4>
+        <div ng-repeat="stakeholder in  project.stakeholders"
+             style="margin:10px;width:130px;height:120px;padding:5px;padding-top:10px;float:left;text-align:center">
+            <a href="/app/#/projects/id/{{project._id}}/stakeholder/{{stakeholder._id}}">
+                <img ng-src="{{stakeholder.avatar}}" alt="Avatar" height="60" width="60"
+                     style="border-radius:30px;border:1px solid grey;"> <br/><br/>
+                {{ stakeholder.name }}
+            </a><br/>
+            <span ng-if="stakeholder._id == project.owner._id" class="grey bold">(Owner)</span>
+        </div>
+    </div>
+    <div class="col-md-9 col-md-offset-1" style="margin-top:50px;overflow: scroll">
+        <h4>Phases</h4><br/>
+        <div ng-repeat="phase in  project.template.phases"
+             style="border:1px solid grey; margin:10px;width:180px;height:60px;padding-top:20px;text-align: center;;float:left;
+             border-radius:10px" ng-style="setcolor(phase, project.current_phase)">
+            <a href="/app/#/project/view/{{project._id}}/phase/{{phase}}">
+                {{ phase }}
+            </a>
+        </div>
+    </div>
+</div>
+

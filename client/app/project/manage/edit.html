@@ -1,0 +1,55 @@
+
+
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <div style="float:right">
+            <a href="/app/#/projects/id/{{project._id}}/edit" class="btn btn-info">Save</a>
+            <a href="/app/#/projects/id/{{project._id}}/related" class="btn btn-success">Related</a>
+            <a href="/app/#/projects/id/{{project._id}}/risks" class="btn btn-danger">Risks <span ng-if="project.risks != undefined">({{project.risks.length}})</span></a>
+            <a href="/app/#/projects/id/{{project._id}}/feedback" class="btn btn-primary">Feedback ({{project.feedback.length}})</a>
+            <a href="#"  ng-click="delete()" class="btn btn-warning">Archive</a>
+        </div>
+        <a href="/app/#/projects/id/{{project._id}}">Back</a>
+        <div class="col-md-12 col-md-offset-1">
+            <h2 class="grey">
+                <img ng-src="{{project.thumbnail}}" alt="Thumbnail" height="60" width="90" style="border:1px solid grey; border-radius:10px;">
+                <input type="text" id="project.name" style="width:800px; height:40px;font-weight: bold; font-size:32px"/>
+            </h2>
+        </div>
+        <div style="font-style: italic; font-size: 0.8em; margin-left:200px">
+            <textarea id="project.description" style="width:800px;height:60px;border:1px solid grey;">
+            </textarea>
+        </div>
+    </div>
+</div>
+
+<div style="margin-left:150px;margin-top:60px;">
+    <h4>Stakeholders</h4>
+    <div ng-repeat="stakeholder in  project.stakeholders"
+         style="margin:10px;width:130px;height:120px;padding:5px;padding-top:10px;float:left;text-align:center">
+        <a href="/app/#/projects/id/{{project._id}}/stakeholder/{{stakeholder._id}}">
+            <img ng-src="{{stakeholder.avatar}}" alt="Avatar" height="60" width="60" style="border-radius:30px;border:1px solid grey;"> <br/><br/>
+            {{ stakeholder.name }}
+        </a><br/>
+        <span ng-if="stakeholder._id == project.owner._id" class="grey bold">(Owner)</span>
+    </div>
+    <a href="/app/#/projects/id/{{project._id}}/stakeholder/new">
+        <div style="margin:10px;width:130px;height:120px;padding:5px;padding-top:10px;float:left;text-align:center">
+            <img src="http://icons.iconarchive.com/icons/custom-icon-design/silky-line-user/256/user2-add-icon.png"
+                 alt="Avatar" height="60" width="60" style="border-radius:30px;border:1px solid grey;"> <br/><br/>
+            Add Stakeholder
+        </div>
+    </a>
+</div>
+<br/><br/>
+<div style="margin-left:150px;margin-top:150px;">
+    <h4>Phases</h4><br/>
+    <div ng-repeat="phase in  project.template.phases"
+         style="border:1px solid grey; margin:10px;width:180px;height:60px;padding-top:20px;text-align: center;;float:left;
+         border-radius:10px">
+        <a href="/app/#/projects/id/{{project._id}}/phase/{{phase}}">
+            {{ phase }}
+        </a>
+    </div>
+</div>
+

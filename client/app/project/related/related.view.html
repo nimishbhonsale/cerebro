@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <a href="/app/#/project/view/{{project._id}}">Back</a>
+        <div class="col-md-6 col-md-offset-3">
+            <input type="text" style="width:300px;height:32px;" placeholder="Search a project to add relationship"/>
+            <a href="#/projects/search" class="btn btn-info btn-sm">Search</a>
+        </div>
+
+        <br/><br/>
+        <div class="card" ng-repeat="project in projects"
+             style="float:left;border:2px solid grey;margin: 10px;padding: 5px;border-radius:10px; width:240px;">
+            <a href="#/projects/id/{{project._id}}">
+                <img class="card-img-top" ng-src="{{project.thumbnail}}" alt="Card image cap" height="120" width="200"
+                     border="0" style="border-radius:15px;">
+            </a>
+            <div class="card-block" style="text-align: center">
+                <h4 class="card-title">{{project.name}}</h4>
+                <p class="card-text" style="font-size:0.8em;">{{project.description}}</p>
+                <a href="#/projects/id/{{project._id}}" class="btn btn-warning btn-sm" style="float:right;">View</a>
+            </div>
+
+        </div>
+
+        <div class="row"
+             ng-if="project.relation == undefined || project.relation == null || project.relation.length == 0">
+            <div class="col-md-9 col-md-offset-2">
+                No related projects found.
+            </div>
+        </div>
+    </div>
+</div>
+
