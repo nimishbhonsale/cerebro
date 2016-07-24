@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <form  ng-controller="UploadMediaCtrl as up" name="up.upload_form">
+            <div class="modal-header">
+                <h3> {{up.title}} </h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.title.$dirty && form.up.media.title.$error.required }">
+                    <label for="type">Title</label>
+                    <input type="text" name="up.media.title" id="up.media.title"
+                           class="form-control" ng-model="up.media.title" required
+                           placeholder="brief summary of the artifact .."/>
+                    <span ng-show="form.up.media.title.$dirty && form.up.media.title.$error.required"
+                          class="help-block">Artifact title is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.description.$dirty && form.up.media.description.$error.required }">
+                    <label for="type">Description</label>
+                    <input type="text" name="up.media.description" id="up.media.description"
+                           class="form-control" ng-model="up.media.description" required
+                           placeholder="description of the artifact .."/>
+                    <span ng-show="form.up.media.description.$dirty && form.up.media.description.$error.required"
+                          class="help-block">Artifact description is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.tags.$dirty && form.up.media.tags.$error.required }">
+                    <label for="type">Tags</label>
+                    <input type="text" name="up.media.tags" id="up.media.tags"
+                           class="form-control" ng-model="up.media.tags" required
+                       placeholder="comma separated tags for classifying the artifact .."/>
+                    <span ng-show="form.up.media.tags.$dirty && form.up.media.tags.$error.required"
+                          class="help-block">Artifact tags is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.is_primary.$dirty && form.up.media.is_primary.$error.required }">
+                    <label for="type">Is primary or supporting artifact?</label>
+                    <input type="checkbox" name="up.media.is_primary" id="up.media.is_primary"
+                           class="form-control" ng-model="up.media.is_primary" required/>
+                    <span ng-show="form.up.media.is_primary.$dirty && form.up.media.is_primary.$error.required"
+                          class="help-block">Artifact primary is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.type.$dirty && form.up.media.type.$error.required }">
+                    <label for="type">Type of Artifact</label>
+                    <select ng-model="up.media.type" ng-options="t as t for t in up.typeList" class="form-control"
+                            style="height:32px;"></select>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.up.media.is_primary.$dirty && form.up.media.is_primary.$error.required }">
+                    <label for="type">Choose artifact to upload</label>
+                    <input
+                            class="form-control"
+                            type="file"
+                            ngf-select
+                            ng-model="up.file"
+                            name="file"
+                            ngf-pattern="'image/*,application/pdf,text/plain,video/mp4'"
+                            accept="image/*,application/pdf,text/plain,video/mp4"
+                            ngf-max-size="20MB"
+                    />
+                </div>
+                <br/><br/>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="ngdialog-button ngdialog-button-primary"
+                        ng-click="up.submit()">Apply</button> &nbsp;
+                <button type="button" class="ngdialog-button ngdialog-button-secondary"
+                        ng-click=closeThisDialog("Cancel")>Cancel</button>
+            </div>
+        </form>
+
+    </div>
+</div>

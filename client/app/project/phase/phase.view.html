@@ -1,0 +1,105 @@
+
+
+<div class="row">
+    <div class="col-md-9 col-md-offset-1">
+        <div style="float:right">
+            <a href="/app/#/project/{{project._id}}/phase/{{selected_phase}}/milestone/new" class="btn btn-primary btn-sm">New Milestone</a>
+        </div> &nbsp;
+        <div style="float:right;margin-right:10px;">
+            <a href="#" class="btn btn-success btn-sm" ng-if="canProgress(project.current_phase, selected_phase, globals.currentUser.userid, project.owner)"
+               ng-click="progress(project._id, selected_phase)">Complete</a>
+        </div>
+        <a href="/app/#/project/view/{{project._id}}">Back</a>
+            <h4 class="grey">{{ project.name }} (Phase: {{selected_phase}})</h4>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div class="col-md-9 col-md-offset-1">
+    <h4>Milestones</h4>
+    <div ng-repeat="milestone in  project.milestones"
+         style="min-height:390px;padding:10px;border-radius:5px;border:1px solid grey;margin:2px;overflow: scroll;"
+         ng-if="selected_phase == milestone.phase">
+
+            <strong>{{ milestone.name }}</strong> &nbsp; <small>{{milestone.goal}}</small><br/>
+            <small>Duration: {{ milestone.start }}  -  {{ milestone.end }}</small>
+
+                <a href="#"  ng-click="delete()" class="btn btn-warning btn-sm"
+                   style="float:right;margin-right:10px;" ng-if="project.current_phase == selected_phase">Archive</a>
+                <a href="#"  ng-click="edit()" class="btn btn-info btn-sm"
+                   style="float:right;margin-right:10px;" ng-if="project.current_phase == selected_phase">Edit</a>
+                <a href="#"  ng-click="signoff(milestone.name, globals.currentUser.userid)" class="btn btn-success btn-sm"
+                   ng-if="shouldSignOff(milestone.name, milestone.sign_off, project.stakeholders, globals.currentUser.userid)"
+                   style="float:right;margin-right:10px;">Sign Off</a>
+            <br/>
+        <div style="width:800px;overflow-x: scroll">
+            <div style="border:1px solid grey; margin:10px;width:180px;height:140px;text-align: center;float:left; padding:5px;
+             border-radius:10px;">
+                <div>
+                    <img ng-src="http://www2.psd100.com/ppp/2013/11/0601/Add-video-icon-1106073050.png"
+                         ng-click="openUpload(milestone.name, globals.currentUser.userid)"
+                         alt="Media" height="60" width="60" style="border-radius:30px;border:1px solid grey;"/>
+                    <br/><br/>
+                    <small>Upload New Artifact</small>
+                </div>
+            </div>
+            <ul ng-repeat="media in  milestone.media"
+                 style="border:1px solid grey; margin:10px;width:180px;height:140px;padding-top:20px;text-align: center;float:left;
+             border-radius:10px;" id="horiznavlist">
+                    <div style="text-align: center">
+                        <img ng-src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Adobe_ExportPDF_icon.png"
+                             ng-if="media.filetype === 'application/pdf'"
+                                 alt="Media" height="60" width="60" style="border-radius:30px;border:1px solid grey;margin-top:-10px;"/>
+                        <img ng-src="https://upload.wikimedia.org/wikipedia/commons/2/23/Text-txt.svg"
+                             ng-if="media.filetype === 'text/plain'"
+                             alt="Media" height="60" width="60" style="border-radius:30px;border:1px solid grey;margin-top:-10px;"/>
+                        <img ng-src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Gnome-video-x-generic.svg"
+                             ng-if="media.filetype === 'video/mp4'"
+                             alt="Media" height="60" width="60" style="border-radius:30px;border:1px solid grey;margin-top:-10px;"/>
+                        <img ng-src="https://upload.wikimedia.org/wikipedia/commons/2/23/Text-txt.svg"
+                             ng-if="media.filetype.lastIndexOf('image',0) === 0"
+                             alt="Media" height="60" width="60" style="border-radius:30px;border:1px solid grey;margin-top:-10px;"/>
+                            <br/><br/>
+                         <a href="{{media.uri}}" target="_blank">
+                            <small>{{media.title.toString().substring(0,30)}}</small>
+                        </a>
+                    </div>
+                    <div style="margin:2px;float:left;">
+                        <!--<small style="float:left;margin-left:5px;">{{media.rating}} / 5.0 </small>
+                        <small style="float:right;margin-right:5px;">{{media.likes}} likes</small>-->
+                        <small style="float:left;margin-left:5px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Comments_font_awesome.svg"
+                                 height="16" width="16"/>
+                            {{media.comments.length}} | </small>
+                        <small style="float:left;margin-left:5px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Facebook_like_thumb.png"
+                                 height="16" width="16"/>
+                            {{media.likes}} | </small>
+                        <small style="float:left;margin-left:5px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/StarIconGold.png"
+                                 height="16" width="16"/>
+                            {{media.rating}}</small>
+                    </div>
+                </ul>
+        </div>
+            <div style="margin-top:100px;">
+                <div style="float:left;">Signoff Status</div><br/>
+                <div ng-repeat="stakeholder in  project.stakeholders"
+                     style="margin:10px;width:130px;height:120px;padding:5px;padding-top:10px;float:left;text-align:center">
+                    <a href="/app/#/users/id/{{stakeholder._id}}">
+                        <img ng-src="http://www.clipartbest.com/cliparts/Kij/exq/KijexqjeT.png"
+                             alt="Media" height="16" width="16"
+                             ng-if="check(milestone.sign_off,stakeholder)"/>
+                        <img ng-src="http://individual.icons-land.com/IconsPreview/BaseSoftware/PNG/16x16/DeleteRed.png"
+                             alt="Media" height="16" width="16"
+                             ng-if="!check(milestone.sign_off,stakeholder)"/>
+                        <img ng-src="{{stakeholder.avatar}}" alt="Avatar" height="60" width="60" style="border-radius:30px;border:1px solid grey;"> <br/><br/>
+                        {{ stakeholder.name }}
+                    </a><br/>
+                    <span ng-if="stakeholder._id == project.owner._id" class="grey bold">(Owner)</span>
+                </div>
+            </div>
+
+    </div>
+</div>
+

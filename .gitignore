@@ -1,0 +1,10 @@
+# client npm_modules
+/client/node_modules
+/client/app/bower_components
+
+#server node_modules
+/server/node_modules
+/server/bin
+/server/uploads
+.idea/
+server/.idea/

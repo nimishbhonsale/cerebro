@@ -1,0 +1,40 @@
+
+
+<div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div style="float:right">
+                <a href="/app/#/project/view/{{project._id}}/risks/new" class="btn btn-danger">Add a Risk</a>
+                <a href="/app/#/project/view/{{project._id}}/related" class="btn btn-success">Related</a>
+                <a href="/app/#/project/view/{{project._id}}/feedback" class="btn btn-primary">Feedback</a>
+            </div>
+        <a href="/app/#/project/view/{{project._id}}">Back</a>
+        <div class="col-md-12 col-md-offset-1">
+            <h2 class="grey">
+                <img ng-src="{{project.thumbnail}}" alt="Thumbnail" height="60" width="90" style="border:1px solid grey; border-radius:10px;">
+                {{ project.name }}
+            </h2>
+        </div>
+        <div style="font-style: italic; font-size: 0.8em; margin-left:210px">
+            {{ project.description}}
+        </div>
+    </div>
+
+    <br/><br/>
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+            <h4>Risks</h4><br/>
+            <div ng-repeat="risk in  project.risks"
+                 style="border:1px solid grey; margin:10px;width:800px;height:120px;padding:10px;border-radius: 10px;">
+                <h5>{risk.title}}</h5>
+                {{risk.details.toString().substring(0,50)}}<br/>
+                <div style="float: left;font-size: smaller">{{risk.updated}}</div>
+                <div style="float: right;font-size: smaller">submitted by {{risk.by.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!project.risks">
+        <div class="col-md-6 col-md-offset-2">
+            No risks found for this project.
+        </div>
+    </div>
+</div>

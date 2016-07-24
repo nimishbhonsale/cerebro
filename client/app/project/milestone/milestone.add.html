@@ -1,0 +1,53 @@
+<div class="col-md-5 col-md-offset-3">
+    <div style="float:right">
+        <a href="/app/#/project/view/{{project._id}}/feedback" class="btn btn-primary">Feedback</a>
+        <a href="/app/#/project/view/{{project._id}}/related" class="btn btn-success">Related</a>
+        <a href="/app/#/project/view/{{project._id}}/risks" class="btn btn-danger">Risks <span
+                ng-if="project.risks != undefined">({{project.risks.length}})</span></a>
+    </div>
+    <a href="/app/#/project/view/{{project._id}}">Back</a>
+    <br/><br/>
+    <br/><br/>
+    <h4>Add a milestone</h4>
+    <form name="form" ng-submit="save()" role="form">
+        <div class="form-group"
+             ng-class="{ 'has-error': form.milestone.name.$dirty && form.milestone.name.$error.required }">
+            <label for="type">Name</label>
+            <input type="text" name="milestone.name" id="milestone.name"
+                   class="form-control" ng-model="milestone.name" required
+                   placeholder="name for the milestone"/>
+            <span ng-show="form.milestone.name.$dirty && form.milestone.name.$error.required"
+                  class="help-block">Milestone name is required</span>
+        </div>
+        <div class="form-group"
+             ng-class="{ 'has-error': form.milestone.goal.$dirty && form.milestone.goal.$error.required }">
+            <label for="type">Goal</label>
+            <input type="text" name="milestone.goal" id="milestone.goal"
+                   class="form-control" ng-model="milestone.goal" required
+                   placeholder="set goal or exit criteria for the milestone"/>
+            <span ng-show="form.milestone.goal.$dirty && form.milestone.goal.$error.required"
+                  class="help-block">Milestone goal is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.milestone.start.$dirty}">
+            <label for="type">Start</label>
+            <input type="text" name="milestone.start" id="milestone.start"
+                   class="form-control" ng-model="milestone.start"
+                   placeholder="MM/dd/yyyy" uib-datepicker-popup="MM/dd/yyyy"/>
+            <span ng-show="form.milestone.start.$dirty"
+                  class="help-block">Milestone start date should be of format: MM/dd/yyyy</span>
+
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.milestone.end.$dirty}">
+            <label for="type">End</label>
+            <input type="text" name="milestone.end" id="milestone.end"
+                   class="form-control" ng-model="milestone.end"
+                   placeholder="MM/dd/yyyy"/>
+            <span ng-show="form.milestone.end.$dirty"
+                  class="help-block">Milestone end date should be of format: MM/dd/yyyy</span>
+        </div>
+        <div class="form-actions">
+            <a href="/app/#/project/view/{{project._id}}/phase/{{milestone.phase}}">Cancel</a>
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
